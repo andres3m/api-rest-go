@@ -37,9 +37,23 @@ func postDrivers(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, drivers)
 }
 
+func getDriverByID(c *gin.Context) {
+	id := c.Param("id")
+
+	for _, d := range drivers {
+		if d.ID == id {
+			c.IndentedJSON(http.StatusOK, d)
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Driver not found"})
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/drivers", getDrivers)
+	router.GET("drivers/:id", getDriverByID)
 	router.POST("/drivers", postDrivers)
 
 	router.Run("Localhost:8080")
