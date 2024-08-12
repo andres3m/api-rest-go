@@ -25,9 +25,22 @@ func getDrivers(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, drivers)
 }
 
+func postDrivers(c *gin.Context) {
+	var newDriver driver
+
+	if err := c.BindJSON(&newDriver); err != nil {
+		return
+	}
+
+	drivers = append(drivers, newDriver)
+
+	c.IndentedJSON(http.StatusCreated, drivers)
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/drivers", getDrivers)
+	router.POST("/drivers", postDrivers)
 
 	router.Run("Localhost:8080")
 }
