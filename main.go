@@ -56,5 +56,5 @@ func main() {
 	router.GET("drivers/:id", getDriverByID)
 	router.POST("/drivers", postDrivers)
 
-	router.Run("Localhost:8080")
+	router.Run("0.0.0.0:8080")
 }
